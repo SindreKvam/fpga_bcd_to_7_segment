@@ -26,6 +26,7 @@ begin
 	process(D0, D1, D2, D3) is
 	begin
 
+
 		a <= D0 or D2 or (D1 and D3) or (not D1 and not D3);
 		b <= not D1 or (not D2 and not D3) or (D2 and D3);
 		c <= D1 or not D2 or D3;
