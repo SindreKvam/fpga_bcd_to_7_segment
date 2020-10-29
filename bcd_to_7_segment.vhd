@@ -16,7 +16,8 @@ port(
 	d : out std_logic;
 	e : out std_logic;
 	f : out std_logic;
-	g : out std_logic);
+	g : out std_logic
+	);
 end entity;
 
 
@@ -26,14 +27,14 @@ begin
 	process(D0, D1, D2, D3) is
 	begin
 
-
-		a <= D0 or D2 or (D1 and D3) or (not D1 and not D3);
-		b <= not D1 or (not D2 and not D3) or (D2 and D3);
-		c <= D1 or not D2 or D3;
-		d <= (D2 and not D1) or (not D1 and not D3) or (D2 and not D3) or D0 or (D1 and not D2 and D3);
-		e <= (not D1 and not D3) or (D2 and not D3);
-		f <= D0 or (not D2 and not D3) or (D1 and not D2) or (D1 and not D3);
-		g <= D0 or (D1 and not D2) or (not D1 and D2) or (D2 and not D3);
+			-- The not on every output is because the 7-segment display is using common anode instead of cathode
+		a <= not (D0 or D2 or (D1 and D3) or (not D1 and not D3));
+		b <= not (not D1 or (not D2 and not D3) or (D2 and D3));
+		c <= not (D1 or not D2 or D3);
+		d <= not ((D2 and not D1) or (not D1 and not D3) or (D2 and not D3) or D0 or (D1 and not D2 and D3));
+		e <= not ((not D1 and not D3) or (D2 and not D3));
+		f <= not (D0 or (not D2 and not D3) or (D1 and not D2) or (D1 and not D3));
+		g <= not (D0 or (D1 and not D2) or (not D1 and D2) or (D2 and not D3));
 
 	end process;
 
