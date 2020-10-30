@@ -34,7 +34,7 @@ begin
 
 					binary_o <= std_logic_vector(unsigned(binary_o) + 1);
 
-					if unsigned(binary_o) > 59 then
+					if unsigned(binary_o) >= 99 then
 						binary_o <= (others => '0');
 					end if;
 
