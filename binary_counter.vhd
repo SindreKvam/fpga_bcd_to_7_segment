@@ -19,7 +19,6 @@ end entity;
 architecture rtl of counter is
 	signal current_count : natural;
 begin
-	-- Do not count further than to 59 for seconds, 59 minutes and 24 hours
 	process(clk) is
 	begin
 
