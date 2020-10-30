@@ -12,17 +12,13 @@ architecture tb of counter_tb is
 	signal rst_n_tb : std_logic := '0';
 	signal cnt_tb 	: std_logic_vector(31 downto 0) := (others => '0');
 
-	signal D0_tb : std_logic := '0';
-	signal D1_tb : std_logic := '0';
-	signal D2_tb : std_logic := '0';
-	signal D3_tb : std_logic := '0';
+	signal binary_o_tb : std_logic_vector(7 downto 0);
+
 begin
 	dut : entity work.counter
 	port map(
-	D0	=> D0_tb,
-	D1	=> D1_tb,
-	D2	=> D2_tb,
-	D3	=> D3_tb,
+
+	binary_o => binary_o_tb,
 
 	clk	=> clk_tb,
 	rst_n	=> rst_n_tb,
