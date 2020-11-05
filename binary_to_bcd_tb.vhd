@@ -7,8 +7,8 @@ entity binary_to_bcd_tb is
 end entity;
 
 
-architecture rtl of binary_to_bcd_tb is
-  signal binary_tb : std_logic_vector(7 downto 0) := (others => '0');
+architecture tb of binary_to_bcd_tb is
+  signal binary_tb : std_logic_vector(6 downto 0) := (others => '0');
 
   signal bcd_0_tb : std_logic_vector(3 downto 0); -- One
   signal bcd_1_tb : std_logic_vector(3 downto 0); -- Ten
@@ -25,7 +25,7 @@ begin
   process is
   begin
 
-    binary_tb <= X"15";
+    binary_tb <= "0100000";
     wait for 10 ns;
 
   end process;

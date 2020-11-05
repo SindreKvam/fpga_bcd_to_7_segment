@@ -5,7 +5,7 @@ use ieee.std_logic_1164.all;
 
 entity binary_to_bcd is
   port(
-  binary : in std_logic_vector(7 downto 0);
+  binary : in std_logic_vector(6 downto 0);
 
   bcd_0 : out std_logic_vector(3 downto 0) := (others => '0'); -- One
   bcd_1 : out std_logic_vector(3 downto 0) := (others => '0') -- Ten
@@ -23,7 +23,7 @@ process(binary) is
     a := (others => '0');
     b := (others => '0');
 
-    for i in 7 downto 0 loop
+    for i in 6 downto 0 loop
 
       if unsigned(a) > 4 then
         a := std_logic_vector(unsigned(a) + 3);
@@ -34,10 +34,10 @@ process(binary) is
 
       end if;
 
-      b := b sll 1; --sll - shift logic left
+      b := b(2 downto 0) & '0'; --sll - shift logic left
       b(0) := a(3);
 
-      a := a sll 1;
+      a := a(2 downto 0) & '0';
       a(0) := binary(i);
     end loop;
 

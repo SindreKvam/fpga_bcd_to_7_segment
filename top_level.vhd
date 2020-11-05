@@ -3,64 +3,122 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 
-entity top_level is
+entity top is
 port(
-	clk : in std_logic;
-	rst_n : in std_logic;
-
-	a : out std_logic;
-	b : out std_logic;
-	c : out std_logic;
-	d : out std_logic;
-	e : out std_logic;
-	f : out std_logic;
-	g : out std_logic);
+	MAX10_CLK1_50 : in std_logic;
+	KEY : in std_logic_vector(1 downto 0);
+	HEX0 : out std_logic_vector(6 downto 0);
+	HEX1 : out std_logic_vector(6 downto 0);
+	HEX2 : out std_logic_vector(6 downto 0);
+	HEX3 : out std_logic_vector(6 downto 0);
+	HEX4 : out std_logic_vector(6 downto 0);
+	HEX5 : out std_logic_vector(6 downto 0)
+	);
 end entity;
 
 
-architecture rtl of top_level is
+architecture rtl of top is
 	signal internal_clock : std_logic;
-	signal D0 : std_logic;
-	signal D1 : std_logic;
-	signal D2 : std_logic;
-	signal D3 : std_logic;
-	
+
+	signal binary_h : std_logic_vector(6 downto 0);
+	signal binary_m : std_logic_vector(6 downto 0);
+	signal binary_s : std_logic_vector(6 downto 0);
+
+--	signal binary : std_logic_vector(6 downto 0);
+	signal bcd_0_h : std_logic_vector(3 downto 0); -- One
+  signal bcd_1_h : std_logic_vector(3 downto 0); -- Ten
+	signal bcd_0_m : std_logic_vector(3 downto 0); -- One
+  signal bcd_1_m : std_logic_vector(3 downto 0); -- Ten
+	signal bcd_0_s : std_logic_vector(3 downto 0); -- One
+  signal bcd_1_s : std_logic_vector(3 downto 0); -- Ten
+
 begin
+ --HEX0 <= (g & f & e & d & c & b & a);
+ --rst_n <= KEY(0);
 system_clock : entity work.clock
 	port map
 	(
-		areset => not rst_n,
-		inclk0 => clk,
+		areset => '0',
+		inclk0 => MAX10_CLK1_50,
 		c0 => internal_clock,
 		locked => open
 	);
-	
+
 counter_i : entity work.counter
 port map(
 	clk => internal_clock,
-	rst_n => rst_n,
-	cnt => X"02FAF080",
+	rst_n => KEY(0),
+	cnt => X"00002FAF", --02FAF080 for 50MHz
 
-	D0 => D0,
-	D1 => D1,
-	D2 => D2,
-	D3 => D3
+	binary_h => binary_h,
+	binary_m => binary_m,
+	binary_s => binary_s
 	);
 
-inputs_i : entity work.bcd_to_7_segment
-port map(
-	D0 => D3,
-	D1 => D2,
-	D2 => D1,
-	D3 => D0,
 
-	a => a,
-	b => b,
-	c => c,
-	d => d,
-	e => e,
-	f => f,
-	g => g);
+binary_to_bcd_h : entity work.binary_to_bcd
+port map(
+	binary => binary_h,
+	bcd_0 => bcd_0_h,
+	bcd_1 => bcd_1_h
+);
+
+binary_to_bcd_m : entity work.binary_to_bcd
+port map(
+	binary => binary_m,
+	bcd_0 => bcd_0_m,
+	bcd_1 => bcd_1_m
+);
+
+binary_to_bcd_s : entity work.binary_to_bcd
+port map(
+	binary => binary_s,
+	bcd_0 => bcd_0_s,
+	bcd_1 => bcd_1_s
+);
+
+
+inputs_0_i : entity work.bcd_to_7_segment
+port map(
+	bcd => bcd_0_s,
+
+	seven_seg => HEX0
+
+	);
+
+inputs_1_i : entity work.bcd_to_7_segment
+port map(
+	bcd => bcd_1_s,
+
+	seven_seg => HEX1
+	);
+
+inputs_2_i : entity work.bcd_to_7_segment
+port map(
+	bcd => bcd_0_m,
+
+	seven_seg => HEX2
+	);
+
+inputs_3_i : entity work.bcd_to_7_segment
+port map(
+	bcd => bcd_1_m,
+
+	seven_seg => HEX3
+	);
+
+inputs_4_i : entity work.bcd_to_7_segment
+port map(
+	bcd => bcd_0_h,
+
+	seven_seg => HEX4
+	);
+
+inputs_5_i : entity work.bcd_to_7_segment
+port map(
+	bcd => bcd_1_h,
+
+	seven_seg => HEX5
+	);
 
 end architecture;
-

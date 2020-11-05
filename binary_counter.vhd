@@ -10,9 +10,9 @@ port(
 	rst_n : in std_logic;
 	cnt : in std_logic_vector(31 downto 0); -- Just needs to hold 50 million because we're operating at 50 MHz
 
-	binary_h : out std_logic_vector(7 downto 0) := (others => '0');
-	binary_m : out std_logic_vector(7 downto 0) := (others => '0');
-	binary_s : out std_logic_vector(7 downto 0) := (others => '0')
+	binary_h : out std_logic_vector(6 downto 0) := (others => '0');
+	binary_m : out std_logic_vector(6 downto 0) := (others => '0');
+	binary_s : out std_logic_vector(6 downto 0) := (others => '0')
 	);
 
 end entity;
@@ -27,6 +27,10 @@ begin
 		if rising_edge(clk) then
 			if rst_n = '0' then
 				current_count <= 0;
+				binary_h <= (others => '0');
+				binary_m <= (others => '0');
+				binary_s <= (others => '0');
+
 			else
 
 				if current_count < to_integer(unsigned(cnt)) then

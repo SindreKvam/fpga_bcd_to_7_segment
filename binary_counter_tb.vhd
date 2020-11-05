@@ -12,9 +12,9 @@ architecture tb of counter_tb is
 	signal rst_n_tb : std_logic := '0';
 	signal cnt_tb 	: std_logic_vector(31 downto 0) := (others => '0');
 
-	signal binary_h_tb : std_logic_vector(7 downto 0);
-	signal binary_m_tb : std_logic_vector(7 downto 0);
-	signal binary_s_tb : std_logic_vector(7 downto 0);
+	signal binary_h_tb : std_logic_vector(6 downto 0);
+	signal binary_m_tb : std_logic_vector(6 downto 0);
+	signal binary_s_tb : std_logic_vector(6 downto 0);
 
 begin
 	dut : entity work.counter
