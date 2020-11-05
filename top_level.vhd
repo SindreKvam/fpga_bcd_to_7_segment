@@ -7,6 +7,7 @@ entity top is
 port(
 	MAX10_CLK1_50 : in std_logic;
 	KEY : in std_logic_vector(1 downto 0);
+	SW	: in std_logic_vector(9 downto 0);
 	HEX0 : out std_logic_vector(6 downto 0);
 	HEX1 : out std_logic_vector(6 downto 0);
 	HEX2 : out std_logic_vector(6 downto 0);
@@ -24,7 +25,6 @@ architecture rtl of top is
 	signal binary_m : std_logic_vector(6 downto 0);
 	signal binary_s : std_logic_vector(6 downto 0);
 
---	signal binary : std_logic_vector(6 downto 0);
 	signal bcd_0_h : std_logic_vector(3 downto 0); -- One
   signal bcd_1_h : std_logic_vector(3 downto 0); -- Ten
 	signal bcd_0_m : std_logic_vector(3 downto 0); -- One
@@ -48,7 +48,8 @@ counter_i : entity work.counter
 port map(
 	clk => internal_clock,
 	rst_n => KEY(0),
-	cnt => X"00002FAF", --02FAF080 for 50MHz
+	multiplier => SW,
+	cnt => X"02FAF080", --02FAF080 for 50MHz
 
 	binary_h => binary_h,
 	binary_m => binary_m,

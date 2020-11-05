@@ -9,8 +9,9 @@ end entity;
 
 architecture tb of counter_tb is
 	signal clk_tb 	: std_logic := '0';
-	signal rst_n_tb : std_logic := '0';
+	signal rst_n_tb : std_logic := '1';
 	signal cnt_tb 	: std_logic_vector(31 downto 0) := (others => '0');
+	signal multiplier_tb : std_logic_vector(6 downto 0) := (others => '1');
 
 	signal binary_h_tb : std_logic_vector(6 downto 0);
 	signal binary_m_tb : std_logic_vector(6 downto 0);
@@ -26,17 +27,20 @@ begin
 
 	clk	=> clk_tb,
 	rst_n	=> rst_n_tb,
-	cnt	=> cnt_tb
+	cnt	=> cnt_tb,
+	multiplier => multiplier_tb
 
 	);
 	process is
 	begin
-		wait for 10 ns;
+		wait for 100 ps;
 		clk_tb <= not clk_tb;
+		cnt_tb <= X"0000000F";
 
-		rst_n_tb <= '1' after 13 ns;
+		multiplier_tb <= std_logic_vector(to_unsigned(0,7)) after 20 ns;
+	--	rst_n_tb <= '1'
 
-		cnt_tb <= X"000000F0";
+
 
 	end process;
 end architecture;
