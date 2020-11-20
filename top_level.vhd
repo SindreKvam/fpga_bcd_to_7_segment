@@ -36,13 +36,13 @@ begin
 		port map(
 			areset => '0',
 			inclk0 => MAX10_CLK1_50,
-			c0     => internal_clock,
+			c0     => internal_clock,		-- c0 is put in internal_clock because c0 is an output
 			locked => open
 		);
 
 	counter_i : entity work.counter
 		port map(
-			clk        => internal_clock,
+			clk        => internal_clock,	-- internal_clock is put in clk because clk is an input
 			rst_n      => KEY(0),
 			multiplier => SW,
 			led        => LEDR,
